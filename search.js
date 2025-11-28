@@ -17,8 +17,40 @@ let lookupData = {
     price_range: {}
 };
 
+// Debug logger ที่แสดงบนหน้าเว็บ
+let debugLogs = [];
+function debugLog(message) {
+    console.log(message);
+    debugLogs.push('[' + new Date().toLocaleTimeString() + '] ' + message);
+    
+    // แสดง debug info ที่มุมขวาบน
+    let debugDiv = document.getElementById('debugInfo');
+    if (!debugDiv) {
+        debugDiv = document.createElement('div');
+        debugDiv.id = 'debugInfo';
+        debugDiv.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-family: monospace;
+            max-width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 99999;
+        `;
+        document.body.appendChild(debugDiv);
+    }
+    debugDiv.textContent = debugLogs.slice(-10).join('\n');
+}
+
 // โหลดข้อมูลเมื่อเริ่มต้น
 document.addEventListener('DOMContentLoaded', async function() {
+    debugLog('DOMContentLoaded event fired');
     await loadData();
     await loadLookupData();
     initializeFilters();
@@ -46,10 +78,16 @@ function handleSearch() {
 // โหลด JSON data
 async function loadData() {
     try {
+        debugLog('Loading stones_data.json...');
         const response = await fetch('./stones_data.json');
-        if (!response.ok) throw new Error('Failed to load stones_data.json');
+        if (!response.ok) throw new Error('Failed to load stones_data.json: ' + response.status);
         stonesData = await response.json();
-        console.log('Loaded ' + stonesData.length + ' stones');
+        debugLog('Loaded ' + stonesData.length + ' stones');
+    } catch (error) {
+        debugLog('ERROR loading stones: ' + error.message);
+        console.error(error);
+    }
+}
     } catch (error) {
         console.error('Error loading stones data:', error);
         document.getElementById('results').innerHTML = '<div class="empty-state"><p>⚠️ เกิดข้อผิดพลาดในการโหลดข้อมูล</p></div>';
@@ -59,6 +97,7 @@ async function loadData() {
 // โหลด lookup data
 async function loadLookupData() {
     const lookups = ['colors', 'days', 'months', 'zodiacs_th', 'zodiacs_en', 'chakra', 'groups', 'hardness', 'power', 'element', 'numerology', 'usage', 'cleansing', 'rarity', 'price_range'];
+    debugLog('Loading ' + lookups.length + ' lookup files...');
     
     for (let lookup of lookups) {
         try {
@@ -74,7 +113,7 @@ async function loadLookupData() {
             
             const response = await fetch(filename);
             if (!response.ok) {
-                console.warn('Failed to fetch ' + lookup + ': ' + response.status);
+                debugLog('⚠️ Failed to fetch ' + lookup + ': HTTP ' + response.status);
                 continue;
             }
             const data = await response.json();
@@ -85,12 +124,12 @@ async function loadLookupData() {
             data.forEach(item => {
                 lookupData[key][item.id] = item;
             });
-            console.log('Loaded ' + lookup + ' (' + data.length + ' items)');
+            debugLog('✓ Loaded ' + lookup + ' (' + data.length + ' items)');
         } catch (error) {
-            console.warn('Could not load ' + lookup, error);
+            debugLog('❌ ' + lookup + ' error: ' + error.message);
         }
     }
-}
+    debugLog('All data loaded successfully!');
 
 // เริ่มต้น Filter Dropdowns
 function initializeFilters() {
