@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบค้นหาหินมงคล - Dseekstone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        header h1 {
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 1.8em;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 0.95em;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .filters-panel {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        .filters-panel h2 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 8px;
+        }
+        
+        .filter-group {
+            margin-bottom: 12px;
+        }
+        
+        .filter-group label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .filter-group label[onclick] {
+            color: #667eea;
+            transition: all 0.2s;
+        }
+        
+        .filter-group label[onclick]:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .filter-group input[type="text"],
+        .filter-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .filter-group input[type="text"]:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            margin-bottom: 0;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 6px;
+            cursor: pointer;
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 12px 0 0 0;
+            border-top: 1px solid #eee;
+        }
+        
+        button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            width: 100%;
+        }
+        
+        .btn-search {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-search:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #6b3e91 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-search:active {
+            transform: translateY(0);
+        }
+        
+        .btn-reset {
+            background: #f5f5f5;
+            color: #666;
+            border: 2px solid #ddd;
+        }
+        
+        .btn-reset:hover {
+            background: #efefef;
+            border-color: #999;
+        }
+        
+        .results-panel {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .results-header h2 {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        
+        .result-count {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .stones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 15px;
+        }
+        
+        .stone-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .stone-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        
+        .stone-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+        
+        .stone-thai {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+        
+        .stone-info {
+            font-size: 0.8em;
+            color: #777;
+            line-height: 1.5;
+        }
+        
+        .stone-info span {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .stone-detail {
+            cursor: pointer;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-direction: row;
+            gap: 4px;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid #e0e0e0;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+        }
+
+        .search-btn {
+            padding: 3px 6px;
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8em;
+            line-height: 1;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .search-btn.google {
+            background: #4285f4;
+            color: white;
+        }
+
+        .search-btn.google:hover {
+            background: #357ae8;
+        }
+
+        .search-btn.etsy {
+            background: #f56400;
+            color: white;
+        }
+
+        .search-btn.etsy:hover {
+            background: #db5700;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            flex-wrap: nowrap;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .action-btn.google {
+            background: #4285f4;
+            color: white;
+        }
+
+        .action-btn.google:hover {
+            background: #357ae8;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.etsy {
+            background: #f56400;
+            color: white;
+        }
+
+        .action-btn.etsy:hover {
+            background: #db5700;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.text {
+            background: #34a853;
+            color: white;
+        }
+
+        .action-btn.text:hover {
+            background: #2d9148;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.pdf {
+            background: #ea4335;
+            color: white;
+        }
+
+        .action-btn.pdf:hover {
+            background: #d33828;
+            transform: translateY(-1px);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .empty-state p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: #f5f5f5;
+            margin: 2% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .detail-header {
+            background: white;
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .detail-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin: 0 0 5px 0;
+        }
+        
+        .detail-header h3 {
+            color: #888;
+            font-size: 1.2em;
+            margin: 0 0 8px 0;
+            font-weight: normal;
+        }
+        
+        .detail-header .other-name {
+            color: #666;
+            font-size: 0.95em;
+            font-style: italic;
+            margin: 5px 0 0 0;
+        }
+        
+        .detail-title {
+            margin-bottom: 15px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            text-align: left;
+        }
+        
+        .detail-title h2 {
+            color: #333;
+            font-size: 1.1em;
+            margin: 0;
+            font-weight: normal;
+            line-height: 1.4;
+        }
+        
+        .english-name {
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-grid-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .detail-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .detail-section {
+            margin-bottom: 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 3px solid #667eea;
+        }
+        
+        .detail-section h4 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 1em;
+        }
+        
+        .detail-section h5 {
+            color: #764ba2;
+            margin: 12px 0 8px 0;
+            font-size: 0.95em;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 6px;
+        }
+        
+        .detail-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            border-left: 2px solid #764ba2;
+        }
+        
+        .detail-item strong {
+            display: block;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+        
+        .detail-item p {
+            margin: 6px 0;
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.9em;
+        }
+        
+        .detail-item em {
+            color: #764ba2;
+            font-style: italic;
+        }
+
+        .detail-section p {
+            margin: 0;
+            color: #333;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+        
+        .info-box {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .info-box:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+        
+        .compact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .info-row {
+            display: flex;
+            gap: 8px;
+            font-size: 0.9em;
+            padding: 4px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #667eea;
+            font-weight: 600;
+            min-width: 85px;
+            flex-shrink: 0;
+        }
+        
+        .info-value {
+            color: #333;
+            line-height: 1.4;
+            flex: 1;
+        }
+        
+        @media (max-width: 900px) {
+            .detail-grid-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #667eea;
+        }
+        
+        .modal h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .modal-body p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .modal-body strong {
+            color: #667eea;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-panel {
+                max-height: none;
+            }
+            
+            .stones-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Thai Calendar Styles */
+        .date-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .date-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+        
+        .calendar-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background 0.3s;
+        }
+        
+        .calendar-btn:hover {
+            background: #5568d3;
+        }
+        
+        .thai-calendar {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            padding: 15px;
+            z-index: 1000;
+            min-width: 320px;
+            display: none;
+        }
+        
+        .thai-calendar.show {
+            display: block;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            gap: 10px;
+        }
+        
+        .calendar-header button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+        
+        .calendar-header button:hover {
+            background: #5568d3;
+        }
+        
+        .calendar-title {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .calendar-title select,
+        .calendar-title input {
+            padding: 6px 10px;
+            border: 1px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-weight: bold;
+            color: #667eea;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .calendar-title select {
+            flex: 1;
+            max-width: 120px;
+        }
+        
+        .calendar-title input {
+            text-align: center;
+        }
+        
+        .calendar-title select:focus,
+        .calendar-title input:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+        
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .weekday {
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+            padding: 5px;
+            font-size: 0.85em;
+        }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+        
+        .calendar-day:hover {
+            background: #e8ebfc;
+            border-color: #667eea;
+        }
+        
+        .calendar-day.other-month {
+            color: #ccc;
+            cursor: default;
+        }
+        
+        .calendar-day.other-month:hover {
+            background: white;
+            border-color: #ddd;
+        }
+        
+        .calendar-day.selected {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+            border-color: #667eea;
+        }
+        
+        .calendar-day.today {
+            border: 2px solid #764ba2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💎 ระบบค้นหาหินมงคล</h1>
+            <p>ค้นหาหินมงคลที่เหมาะสมกับคุณตามเงื่อนไขต่าง ๆ</p>
+        </header>
+        
+        <div class="main-grid">
+            <!-- Filters Panel -->
+            <div class="filters-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h2 id="panelTitle">🔍 ตัวกรอง</h2>
+                    <button onclick="toggleMode()" style="padding: 6px 12px; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85em;">
+                        <span id="toggleBtn">🎂 วันเกิด</span>
+                    </button>
+                </div>
+                
+                <!-- Filter Mode -->
+                <div id="filterMode">
+                    <div class="filter-group">
+                    <label>ชื่อหิน (ภาษาอังกฤษ/ไทย)</label>
+                    <input type="text" id="stoneName" placeholder="เช่น Amethyst" onkeypress="if(event.key==='Enter') searchStones()">
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneColor')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">สี (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneColor">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneDay')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">วัน (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneDay">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneMonth')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">เดือน (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneMonth">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneZodiacTh')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">ปีนักษัตร (จันทรคติ) (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneZodiacTh">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneZodiacEn')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">ราศี (สุริยคติ) (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneZodiacEn">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneChakra')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">จักระ (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneChakra">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneGroup')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">กลุ่มมงคล (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneGroup">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stoneHardness')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">ความแข็ง (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stoneHardness">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label onclick="resetFilter('stonePower')" style="cursor: pointer;" title="คลิกเพื่อรีเซ็ท">ระดับพลัง (คลิกเพื่อรีเซ็ท)</label>
+                    <select id="stonePower">
+                        <option value="">-- ทั้งหมด --</option>
+                    </select>
+                </div>
+                </div>
+                
+                <!-- Birthday Mode -->
+                <div id="birthdayMode" style="display: none;">
+                    <div class="filter-group">
+                        <label>📅 วันที่เกิด</label>
+                        <div class="date-input-group">
+                            <input type="number" id="birthDay" min="1" max="31" placeholder="วัน" style="width: 70px;">
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>📅 เดือนเกิด</label>
+                        <div class="date-input-group">
+                            <select id="birthMonth" style="flex: 1;">
+                                <option value="">-- เลือก --</option>
+                                <option value="1">มกราคม</option>
+                                <option value="2">กุมภาพันธ์</option>
+                                <option value="3">มีนาคม</option>
+                                <option value="4">เมษายน</option>
+                                <option value="5">พฤษภาคม</option>
+                                <option value="6">มิถุนายน</option>
+                                <option value="7">กรกฎาคม</option>
+                                <option value="8">สิงหาคม</option>
+                                <option value="9">กันยายน</option>
+                                <option value="10">ตุลาคม</option>
+                                <option value="11">พฤศจิกายน</option>
+                                <option value="12">ธันวาคม</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>📅 ปีเกิด (พ.ศ.)</label>
+                        <div class="date-input-group">
+                            <input type="number" id="birthYear" min="2400" max="2600" placeholder="เช่น 2503" style="width: 100px;">
+                            <button class="calendar-btn" onclick="toggleCalendar()" title="เลือกจากปฏิทิน">📅</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Thai Calendar -->
+                    <div id="thaiCalendar" class="thai-calendar">
+                        <div class="calendar-header">
+                            <button onclick="changeMonth(-1)">◀</button>
+                            <div class="calendar-title">
+                                <select id="calendarMonthSelect" onchange="updateCalendar()">
+                                    <option value="1">มกราคม</option>
+                                    <option value="2">กุมภาพันธ์</option>
+                                    <option value="3">มีนาคม</option>
+                                    <option value="4">เมษายน</option>
+                                    <option value="5">พฤษภาคม</option>
+                                    <option value="6">มิถุนายน</option>
+                                    <option value="7">กรกฎาคม</option>
+                                    <option value="8">สิงหาคม</option>
+                                    <option value="9">กันยายน</option>
+                                    <option value="10">ตุลาคม</option>
+                                    <option value="11">พฤศจิกายน</option>
+                                    <option value="12">ธันวาคม</option>
+                                </select>
+                                <input type="number" id="calendarYearInput" min="2400" max="2600" onchange="updateCalendar()" style="width: 80px;">
+                            </div>
+                            <button onclick="changeMonth(1)">▶</button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <div class="weekday">อา</div>
+                            <div class="weekday">จ</div>
+                            <div class="weekday">อ</div>
+                            <div class="weekday">พ</div>
+                            <div class="weekday">พฤ</div>
+                            <div class="weekday">ศ</div>
+                            <div class="weekday">ส</div>
+                        </div>
+                        <div class="calendar-days" id="calendarDays"></div>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn-search" onclick="handleSearch()">
+                        <strong>🔎 ค้นหาหิน</strong>
+                    </button>
+                    <button class="btn-reset" onclick="resetFilters()">🔄 รีเซ็ต</button>
+                </div>
+            </div>
+            
+            <!-- Results Panel -->
+            <div class="results-panel">
+                <div class="results-header">
+                    <h2>📊 ผลการค้นหา</h2>
+                    <div class="result-count">พบ <span id="resultCount">0</span> รายการ</div>
+                </div>
+                <div id="dayInfo"></div>
+                <div id="results" class="stones-grid">
+                    <div class="empty-state">
+                        <p>กรุณากดปุ่ม "ค้นหา" เพื่อแสดงผลลัพธ์</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Stone Details -->
+    <div id="stoneModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+    
+    <script src="search.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿[
+  {
+    "id": 1,
+    "name_th": "แดง",
+    "name_en": "Red",
+    "hex_code": "#EF4444"
+  },
+  {
+    "id": 2,
+    "name_th": "เขียว",
+    "name_en": "Green",
+    "hex_code": "#22C55E"
+  },
+  {
+    "id": 3,
+    "name_th": "ฟ้า",
+    "name_en": "Blue",
+    "hex_code": "#3B82F6"
+  },
+  {
+    "id": 4,
+    "name_th": "น้ำเงิน",
+    "name_en": "Dark Blue",
+    "hex_code": "#2563EB"
+  },
+  {
+    "id": 5,
+    "name_th": "เหลือง",
+    "name_en": "Yellow",
+    "hex_code": "#EAB308"
+  },
+  {
+    "id": 6,
+    "name_th": "ส้ม",
+    "name_en": "Orange",
+    "hex_code": "#F97316"
+  },
+  {
+    "id": 7,
+    "name_th": "ชมพู",
+    "name_en": "Pink",
+    "hex_code": "#EC4899"
+  },
+  {
+    "id": 8,
+    "name_th": "ม่วง",
+    "name_en": "Purple",
+    "hex_code": "#8B5CF6"
+  },
+  {
+    "id": 9,
+    "name_th": "ขาว",
+    "name_en": "White",
+    "hex_code": "#F1F5F9"
+  },
+  {
+    "id": 10,
+    "name_th": "ดำ",
+    "name_en": "Black",
+    "hex_code": "#1F2937"
+  },
+  {
+    "id": 11,
+    "name_th": "เทา",
+    "name_en": "Gray",
+    "hex_code": "#6B7280"
+  },
+  {
+    "id": 12,
+    "name_th": "น้ำตาล",
+    "name_en": "Brown",
+    "hex_code": "#854D0E"
+  },
+  {
+    "id": 13,
+    "name_th": "ใส",
+    "name_en": "Clear",
+    "hex_code": "#F0F8FF"
+  },
+  {
+    "id": 14,
+    "name_th": "เงิน",
+    "name_en": "Silver",
+    "hex_code": "#C0C0C0"
+  },
+  {
+    "id": 15,
+    "name_th": "ทอง",
+    "name_en": "Gold",
+    "hex_code": "#FFD700"
+  },
+  {
+    "id": 16,
+    "name_th": "น้ำตาลแดง",
+    "name_en": "Red Brown",
+    "hex_code": "#A52A2A"
+  },
+  {
+    "id": 17,
+    "name_th": "ครีม",
+    "name_en": "Cream",
+    "hex_code": "#FFFDD0"
+  },
+  {
+    "id": 18,
+    "name_th": "รุ้ง",
+    "name_en": "Rainbow",
+    "hex_code": "#FF0000"
+  },
+  {
+    "id": 19,
+    "name_th": "คริสตัล",
+    "name_en": "Crystal",
+    "hex_code": "#E8D5C4"
+  },
+  {
+    "id": 20,
+    "name_th": "เหลืองนวล",
+    "name_en": "Light Yellow",
+    "hex_code": "#FFFFE0"
+  },
+  {
+    "id": 21,
+    "name_th": "ควันบุหรี่",
+    "name_en": "Smoke",
+    "hex_code": "#8B7355"
+  },
+  {
+    "id": 22,
+    "name_th": "แสด",
+    "name_en": "Saffron",
+    "hex_code": "#FF6B35"
+  }
+]

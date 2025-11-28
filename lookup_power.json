@@ -1,0 +1,85 @@
+﻿[
+  {
+    "id": 1,
+    "name": "มูลธาระ (Root Chakra)",
+    "body_point": "ฐานกระดูกสันหลัง",
+    "color": "แดง/ดำ",
+    "description": "ความอยู่รอด, ความมั่นคง, การลงหลักปักฐาน (Grounding)",
+    "group": "กายภาพ/โลก (Physical/Earthly)",
+    "level": "1"
+  },
+  {
+    "id": 2,
+    "name": "สวาธิษฐาน (Sacral Chakra)",
+    "body_point": "ท้องน้อย/ใต้สะดือ",
+    "color": "ส้ม",
+    "description": "ความคิดสร้างสรรค์, อารมณ์, ความสัมพันธ์, ความรู้สึกทางร่างกาย",
+    "group": "กายภาพ/โลก (Physical/Earthly)",
+    "level": "2"
+  },
+  {
+    "id": 3,
+    "name": "มณีปุระ (Solar Plexus)",
+    "body_point": "ช่องท้อง/เหนือสะดือ",
+    "color": "เหลือง",
+    "description": "พลังอำนาจส่วนตัว (Personal Power), ความมั่นใจในตนเอง, เจตจำนง",
+    "group": "กายภาพ/โลก (Physical/Earthly)",
+    "level": "3"
+  },
+  {
+    "id": 4,
+    "name": "อนาหตะ (Heart Chakra)",
+    "body_point": "กลางหน้าอก/หัวใจ",
+    "color": "เขียว/ชมพู",
+    "description": "ความรักที่ไม่มีเงื่อนไข, ความเมตตา, การเยียวยาอารมณ์",
+    "group": "สะพานเชื่อม (Bridge)",
+    "level": "4"
+  },
+  {
+    "id": 5,
+    "name": "วิสุทธิ (Throat Chakra)",
+    "body_point": "ลำคอ/ต่อมไทรอยด์",
+    "color": "ฟ้าอ่อน",
+    "description": "การสื่อสาร, การแสดงออกถึงความจริง, การแสดงออกอย่างสร้างสรรค์",
+    "group": "จิต/จิตวิญญาณ (Mind/Spiritual)",
+    "level": "5"
+  },
+  {
+    "id": 6,
+    "name": "อาชณะ (Third Eye)",
+    "body_point": "กลางหน้าผาก/ระหว่างคิ้ว",
+    "color": "คราม/น้ำเงินเข้ม",
+    "description": "ญาณหยั่งรู้ (Intuition), สติปัญญา, ความชัดเจนทางจิตใจ",
+    "group": "จิต/จิตวิญญาณ (Mind/Spiritual)",
+    "level": "6"
+  },
+  {
+    "id": 7,
+    "name": "สหัสธาระ (Crown Chakra)",
+    "body_point": "กลางกระหม่อม/ศีรษะ",
+    "color": "ม่วง/ขาวใส",
+    "description": "การเชื่อมต่อทางจิตวิญญาณ, การตื่นรู้, ความรู้แจ้งระดับสูงสุด",
+    "group": "จิต/จิตวิญญาณ (Mind/Spiritual)",
+    "level": "7"
+  },
+  {
+    "id": 8,
+    "name": "ดวงดาวแห่งจิตวิญญาณ (Soul Star)",
+    "body_point": "เหนือศีรษะ 6-12 นิ้ว",
+    "color": "ขาว/ทอง",
+    "description": "พิมพ์เขียวของจิตวิญญาณ (Soul Blueprint), กรรม, ความทรงจำข้ามภพชาติ, การเชื่อมต่อกับจิตวิญญาณสูงสุด",
+    "group": "เหนือมิติ (Transpersonal)",
+    "level": "8"
+  },
+  {
+    "id": 9,
+    "name": "กายแสง (Body of Light/Spirit)",
+    "body_point": "เหนือจักระที่ 8 ขึ้นไป",
+    "color": "แสงสว่าง/ประกาย",
+    "description": "ความสุขนิรันดร์, การเป็นกายแสง (Light Body Activation), สัญชาตญาณชั้นสูง, การเข้าถึงความรู้แจ้งระดับจักรวาล",
+    "group": "เหนือมิติ (Transpersonal)",
+    "level": "9"
+  }
+]
+
+

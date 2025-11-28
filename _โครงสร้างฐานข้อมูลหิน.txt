@@ -1,0 +1,26 @@
+﻿stone_data.json 
+        "id": รหัสหิน 
+        "english_name": ชื่อหินภาษาอังกฤษ
+        "thai_name": ชื่อหินภาษาไทย
+        "other_name": ชื่อเรียกหินอื่น ๆ ตามแหล่งเกิด ตามมงคลของหิน
+        "description": คำอธิบายคุณลักษณะ ลักษณะเด่น 
+        "shistory": ประวัติศาสตร์ อดีตความเป็นมาที่เกี่ยวข้อง
+        "scareful": "ไม่ควรวางในที่ที่มีแสงแดดจ้าเป็นเวลานาน อาจทำให้สีซีด",
+        "sborn": แหล่งค้นพบในอดีต ลักษณะการค้นพบ
+        "snowmake": แหล่งผลิตและจำหน่ายในปัจจุบัน
+        "sobserv": วิธีสังเกตุเพื่อให้ทราบว่าเป็นหินชนิดนี้ ของแท้ ของปลอมเลียนแบบ
+        "shardness": รหัสระดับความแข็งของหิน 4 ระดับ  ( lookup_shardness.json  -id -name -hardness_level)
+        "spower": รหัสระดับพลังงานของหิน 9 ระดับ   ( lookup_spower.json -id -name -power_level )
+        "colors": รหัสขืองสีหิน (หินมีหลายสี)  ( lookup_colors.json  -id  -name_th  -name_en  -hex_code)
+        "days": รหัสของวันของสัปดาห์ที่เหมาะสมกับการนำไปใช้ให้เกิดมงคล (มีได้หลายวัน)   ( lookup_days.json -id  -name  -lucky_color  -unlucky_color  -sort_order)
+        "months": รหัสของเดือนที่เหมาะสมกับการนำไปใช้ให้เกิดมงคล (มีได้หลายเดือน)   ( lookup_mots.json -id -name -sort_order )
+        "zodiacs_th": รหัสของปีนักษัตรที่เหมาะสมกับการนำไปใช้ให้เกิดมงคล   ( lookup_zodiacs_th.json  -id name_th - name_en -sort_order  -element_ids)
+        "zodiacs_en": รหัสของราศีที่เหมาะสมกับการนำไปใช้ให้เกิดมงคล   ( lookup_zodiacs_en.json -id -name_th -name_en  -start_month  -start_day -end_month  -end_day -sort_order -element_ids )
+        "chakra": รหัสของจักระของหิน   ( lookup_chakra.json -id -name_th - name_en -color  -location -history  -auspice_detail  -logo )
+        "element_id": รหัสของธาตุของหิน   ( lookup_element.json  -id  -name_th  -name_en  -description  -history )
+        "numerology": รหัสของเลขมงคลประจำหิน   ( lookup_numerology.json -id  -number  -auspice_detail )
+        "groups": รหัสกลุ่มมงคลของหิน   ( lookup_groups.json -id  -name  -description )
+        "stone_usage": รหัสของวิธีการนำหินไปใช้เพื่อความเป็นมงคล   ( lookup_usage.json -id  -name  -auspice_detail  -description )
+        "stone_cleansing": รหัสของการชำระล้างและบำรุงเก็บรักษาหิน   ( lookup_cleansing.json   -id  -history  -auspice_detail  -description)
+        "rarity": รหัสของระดับความหายากของหิน   ( lookup_rarity.json   -id -name  -level )
+        "price_range": รหัสของระดับราคาของหิน   ( lookup_price_range.json   -id -name -range)
