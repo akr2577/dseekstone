@@ -46,7 +46,8 @@ function handleSearch() {
 // โหลด JSON data
 async function loadData() {
     try {
-        const response = await fetch('stones_data.json');
+        const response = await fetch('./stones_data.json');
+        if (!response.ok) throw new Error('Failed to load stones_data.json');
         stonesData = await response.json();
         console.log('Loaded ' + stonesData.length + ' stones');
     } catch (error) {
@@ -61,15 +62,15 @@ async function loadLookupData() {
     
     for (let lookup of lookups) {
         try {
-            const filename = lookup === 'zodiacs_th' ? 'lookup_zodiacs_th.json' :
-                           lookup === 'zodiacs_en' ? 'lookup_zodiacs_en.json' :
-                           lookup === 'element' ? 'lookup_element.json' :
-                           lookup === 'numerology' ? 'lookup_numerology.json' :
-                           lookup === 'usage' ? 'lookup_usage.json' :
-                           lookup === 'cleansing' ? 'lookup_cleansing.json' :
-                           lookup === 'rarity' ? 'lookup_rarity.json' :
-                           lookup === 'price_range' ? 'lookup_price_range.json' :
-                           `lookup_${lookup}.json`;
+            const filename = lookup === 'zodiacs_th' ? './lookup_zodiacs_th.json' :
+                           lookup === 'zodiacs_en' ? './lookup_zodiacs_en.json' :
+                           lookup === 'element' ? './lookup_element.json' :
+                           lookup === 'numerology' ? './lookup_numerology.json' :
+                           lookup === 'usage' ? './lookup_usage.json' :
+                           lookup === 'cleansing' ? './lookup_cleansing.json' :
+                           lookup === 'rarity' ? './lookup_rarity.json' :
+                           lookup === 'price_range' ? './lookup_price_range.json' :
+                           `./lookup_${lookup}.json`;
             
             const response = await fetch(filename);
             if (!response.ok) {
